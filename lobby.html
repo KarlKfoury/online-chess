@@ -1,0 +1,31 @@
+<html>
+<head>
+<style>
+.txt {
+font-size: 60px;
+}
+</style>
+</head>
+<body>
+<p class="txt">WAITING FOR OTHER PLAYER...</p>
+<script>
+ip = "192.1.1.111"
+id = <FILL>
+jerry = setInterval(function(){
+req = new XMLHttpRequest()
+req.open("POST", ip)
+req.onload = function() {
+if (req.responseText != "/" && req.responseText != "") {
+clearInterval(jerry)
+document.open()
+document.write(req.responseText)
+}
+else {
+j = "nb"
+}
+}
+req.send(["wait%" + id])
+}, 500)
+</script>
+</body>
+</html>
