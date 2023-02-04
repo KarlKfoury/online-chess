@@ -3,6 +3,10 @@ var fs = require('fs')
 var games = []
 var c = []
 var server = http.createServer(async (req, res) => {
+function getopp(n){
+if (n == 0) {return 1}
+return 0
+}
 if (req.method == "GET" && req.url == "/") {
 //checking if there is other player in lobby
 willWait = false
@@ -18,7 +22,7 @@ willWait = true
 //if there is other player:
 if (willWait) {
 games.push([1, 0])
-c.push(["."])
+c.push([".", "."])
 a = fs.readFileSync("lobby.html", "utf-8").split("<FILL>")
 file = (a[0] + "'" + (games.length - 1) + "0'\n" + a[1])
 res.end(file)
@@ -46,23 +50,31 @@ res.end(file)
 }
 res.end("/")
 }
-
+console.log(data[0])
 if (data[0] == "waitForMove") {
-console.log(c)
-if (c[parseInt(data[1][0])][0] != "." && data[1][1] != c[parseInt(data[1][0])][0][0]) {
-console.log("capitoline hill" + data[1])
-res.end(c[parseInt(data[1][0])][0].split("/")[1])
-c[parseInt(data[1][0])][0] = "."
+console.log("c during " + data[1] + " waitformove request: " + c)
+if (c[parseInt(data[1][0])][getopp(parseInt(data[1][1]))] != ".") {
+console.log("other player played")
+res.end(c[parseInt(data[1][0])][getopp(parseInt(data[1][1]))].split("/")[1])
+c[parseInt(data[1][0])][getopp(parseInt(data[1][1]))] = "."
 }
+else {
+console.log(data[1] + "'s opponent didn't play")
 res.end("/")
+}
 }
 
 if (data[0] == "played") {
-console.log("played gang" + data[1])
-c[parseInt(data[1][0])][0] = data[1][1] + "/" + data[2]
+c[parseInt(data[1][0])][parseInt(data[1][1])] = data[1][1] + "/" + data[2]
+console.log("c after "+ data[1] + "played: " + c)
+res.end("/")
 }
 
 })
 }
 })
-server.listen(8080, () => {setInterval(() => {console.log(games)}, 3000)})
+server.listen(8080, () => {setInterval(() => {
+//console.log(games)
+}, 3000)
+}
+)
