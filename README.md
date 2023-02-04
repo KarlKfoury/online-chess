@@ -8,3 +8,5 @@ chess server (html-css-js front end/node.js backend)
 -when a user connects to the server, he will be transfered to the waiting room. If a player is already in the waiting room, a game will start between the both of them
 
 PS: this is a local network application. Any attempt to connect to the server from a router other than the one your server is connected to will fail.
+
+running the server while files connected to it are still open may cause overlap in assigned game IDs for each pair of players. It is therefore better to close all connections to the server before running it
