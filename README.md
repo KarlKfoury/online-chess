@@ -1,5 +1,5 @@
 # online-chess
-chess server and application (html-css-js front end/node.js backend)
+chess server (html-css-js front end/node.js backend)
 
 -the server runs on port 8080
 
